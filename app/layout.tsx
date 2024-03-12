@@ -1,6 +1,9 @@
 import '@/app/ui/global.css'
 import { inter } from '@/app/ui/fonts'
 import { Metadata } from 'next'
+import { Suspense } from 'react'
+import Nav from './ui/nav'
+import Toast from './ui/toast'
 
 export const metadata: Metadata = {
   title: 'Acme Dashboard',
