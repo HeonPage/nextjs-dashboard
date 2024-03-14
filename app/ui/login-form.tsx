@@ -10,10 +10,55 @@ import { ArrowRightIcon } from '@heroicons/react/20/solid'
 import { Button } from './button'
 import { useFormState, useFormStatus } from 'react-dom'
 import { authenticate } from '@/app/lib/actions'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { axiosNext } from '../lib/api'
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
+  const router = useRouter()
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+
+  interface ISignIn {
+    username: string
+    password: string
+    stay: boolean
+  }
+
+  const { register, handleSubmit } = useForm<ISignIn>()
+  const onSubmit: SubmitHandler<any> = async (data) => {
+    setIsSubmitting(true)
+    axiosNext
+      .post(
+        '/auth/signin',
+        {
+          username: data.username,
+          password: data.password,
+        },
+        {
+          params: {
+            stay: data.stay,
+          },
+        },
+      )
+      .then((res) => {
+        if (res?.data?.result?.errorType) {
+          alert(res?.data?.result?.msg)
+        } else {
+          // get return url from query parameters or default to '/'
+          router.push('/')
+          //setAuth(true)
+        }
+      })
+      .catch((error) => {
+        alert('로그인에 실패했습니다.')
+        setIsSubmitting(false)
+      })
+  }
+
   return (
+    // <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
     <form action={dispatch} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${inter.className} mb-3 text-2xl`}>
@@ -35,6 +80,7 @@ export default function LoginForm() {
                 name="username"
                 placeholder="Enter your email address"
                 required
+                // {...register('username')}
               />
               <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
@@ -55,6 +101,7 @@ export default function LoginForm() {
                 placeholder="Enter password"
                 required
                 minLength={6}
+                // {...register('password')}
               />
               <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>

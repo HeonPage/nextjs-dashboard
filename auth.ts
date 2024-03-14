@@ -18,7 +18,12 @@ export const { auth, signIn, signOut } = NextAuth({
             username: username,
             password: password,
           })
-          return user.data.result.user
+          const result = {
+            ...user.data.result.user,
+            access_token: user.data.result.accessToken,
+            refresh_token: user.data.result.refreshToken,
+          }
+          return result
         }
         return null
       },

@@ -1,5 +1,5 @@
+import { auth } from '@/auth'
 import axios from 'axios'
-
 export const axiosNext = axios.create({
   // baseURL: '/api',
   baseURL: 'http://localhost:4000/api',
@@ -10,6 +10,24 @@ export const axiosNext = axios.create({
   withCredentials: true,
   timeout: 20000,
 })
+
+axiosNext.interceptors.request.use(
+  async (config) => {
+    if (!config.headers.Authorization) {
+      const session = await auth()
+      const token = session?.access_token
+      if (token && token.length > 0) {
+        config.headers.Authorization = `Bearer ${token}`
+      } else {
+        alert('세션 연결이 종료되었습니다.')
+      }
+    }
+    return config
+  },
+  (error) => {
+    Promise.reject(error)
+  },
+)
 
 // 게시글 API
 export const createPost = async (title: string, body: string) => {
