@@ -19,7 +19,7 @@ axiosNext.interceptors.request.use(
       if (token && token.length > 0) {
         config.headers.Authorization = `Bearer ${token}`
       } else {
-        alert('세션 연결이 종료되었습니다.')
+        console.log('*** AXIOS : SignIn or Session ERROR ***')
       }
     }
     return config
