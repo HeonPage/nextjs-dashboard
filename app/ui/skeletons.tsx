@@ -1,6 +1,6 @@
 // Loading animation
 const shimmer =
-  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
+  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent'
 
 export function CardSkeleton() {
   return (
@@ -15,7 +15,7 @@ export function CardSkeleton() {
         <div className="h-7 w-20 rounded-md bg-gray-200" />
       </div>
     </div>
-  );
+  )
 }
 
 export function CardsSkeleton() {
@@ -26,7 +26,7 @@ export function CardsSkeleton() {
       <CardSkeleton />
       <CardSkeleton />
     </>
-  );
+  )
 }
 
 export function RevenueChartSkeleton() {
@@ -41,7 +41,7 @@ export function RevenueChartSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function InvoiceSkeleton() {
@@ -56,7 +56,7 @@ export function InvoiceSkeleton() {
       </div>
       <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
     </div>
-  );
+  )
 }
 
 export function LatestInvoicesSkeleton() {
@@ -79,7 +79,7 @@ export function LatestInvoicesSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default function DashboardSkeleton() {
@@ -99,7 +99,7 @@ export default function DashboardSkeleton() {
         <LatestInvoicesSkeleton />
       </div>
     </>
-  );
+  )
 }
 
 export function TableRowSkeleton() {
@@ -113,19 +113,19 @@ export function TableRowSkeleton() {
         </div>
       </td>
       {/* Email */}
-      <td className="whitespace-nowrap px-3 py-3">
+      <td className="whitespace-nowrap px-5 py-2">
         <div className="h-6 w-32 rounded bg-gray-100"></div>
       </td>
       {/* Amount */}
-      <td className="whitespace-nowrap px-3 py-3">
+      <td className="whitespace-nowrap px-5 py-2">
         <div className="h-6 w-16 rounded bg-gray-100"></div>
       </td>
       {/* Date */}
-      <td className="whitespace-nowrap px-3 py-3">
+      <td className="whitespace-nowrap px-5 py-2">
         <div className="h-6 w-16 rounded bg-gray-100"></div>
       </td>
       {/* Status */}
-      <td className="whitespace-nowrap px-3 py-3">
+      <td className="whitespace-nowrap px-5 py-2">
         <div className="h-6 w-16 rounded bg-gray-100"></div>
       </td>
       {/* Actions */}
@@ -136,7 +136,99 @@ export function TableRowSkeleton() {
         </div>
       </td>
     </tr>
-  );
+  )
+}
+
+export function DocumentTableRowSkeleton() {
+  return (
+    <tr className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-5 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-9 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-32 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-48 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-12 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-9 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-72 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+      <td className="whitespace-nowrap px-5 py-2">
+        <div className="flex items-center gap-3">
+          <div className="h-5 w-24 rounded bg-gray-100" />
+        </div>
+      </td>
+    </tr>
+  )
 }
 
 export function InvoicesMobileSkeleton() {
@@ -160,7 +252,7 @@ export function InvoicesMobileSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export function InvoicesTableSkeleton() {
@@ -214,5 +306,137 @@ export function InvoicesTableSkeleton() {
         </div>
       </div>
     </div>
-  );
+  )
+}
+
+export function DocumentsTableSkeleton() {
+  return (
+    <div className="mt-6 flow-root overflow-scroll">
+      <div className="inline-block min-w-full align-middle">
+        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          {/* <div className="md:hidden">
+            <InvoicesMobileSkeleton />
+            <InvoicesMobileSkeleton />
+            <InvoicesMobileSkeleton />
+            <InvoicesMobileSkeleton />
+            <InvoicesMobileSkeleton />
+            <InvoicesMobileSkeleton />
+          </div> */}
+          <table className="hidden min-w-full text-gray-900 md:table">
+            <thead className="rounded-lg text-left text-sm font-normal">
+              <tr>
+                <th
+                  scope="col"
+                  className="px-5 py-2 font-medium text-center sm:pl-6"
+                >
+                  No
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  매체
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  허가번호
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  무선국명
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  관할
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  시설
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  주소
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  출력
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  주파수
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  (주)제조사
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  (주)송신기
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  (예)제조사
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  (예)송신기
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  수신채널
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  안테나
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  편파
+                </th>
+                <th
+                  scope="col"
+                  className="whitespace-nowrap px-5 py-2 font-medium text-center"
+                >
+                  해발고
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              {[...Array(15)].map((_, index) => (
+                <DocumentTableRowSkeleton key={index} />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
 }

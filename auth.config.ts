@@ -3,6 +3,7 @@ import type { NextAuthConfig } from 'next-auth'
 export const authConfig = {
   pages: {
     signIn: '/login',
+    error: '/auth/error',
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
@@ -22,11 +23,16 @@ export const authConfig = {
       session.user.username = token.username
       session.user.nick = token.nick
       session.user.company = token.company
+
       return session
     },
     async jwt({ token, user }) {
       return { ...token, ...user }
     },
+  },
+  session: {
+    maxAge: 1800,
+    strategy: 'jwt',
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig

@@ -1,5 +1,6 @@
 import { auth } from '@/auth'
 import axios from 'axios'
+import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
 export const axiosNext = axios.create({
   // baseURL: '/api',
   baseURL: 'http://localhost:4000/api',
@@ -103,8 +104,30 @@ export const getUserByUsername = async (username: string) => {
 }
 
 // Radio
-export const getRadioDocuments = async () => {
-  return await axiosNext.get(`/document`)
+export const getRadioDocuments = async (
+  take: number,
+  page: number,
+  query: string,
+) => {
+  return (
+    await axiosNext.get(`/document`, {
+      params: {
+        take: take,
+        page: page,
+        query: query,
+      },
+    })
+  ).data.result
+}
+
+export const getRadioDocumentsCount = async (query: string) => {
+  return (
+    await axiosNext.get(`/document/count`, {
+      params: {
+        query: query,
+      },
+    })
+  ).data.result
 }
 
 export const getRadioDocumentsByMedium = async ({
@@ -113,9 +136,5 @@ export const getRadioDocumentsByMedium = async ({
   queryKey: any
 }) => {
   const [_, medium] = queryKey
-  return await axiosNext.get(`/document/${medium}`, {
-    headers: {
-      Authorization: `Bearer ${'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2Q0JDLUhTNTEyIiwia2lkIjoiT1NfUTVYT1dqVXRObHBQUzZ5U3h3eGNVWUR0ZllseVFhcnE0dG1icGZyY01uX0hzYmZvenVUZy1VSFA1NU1zNkd6eHhSOHRFbWJBYUZPNmNNV3JNbmcifQ..FhzoZWdLZVJVP7HVbA6d4A.1ESaqEpWvPAgPtzIg2gi-6lNYmqR6coI_aEJkGXGZpRdJHLCySzSOaX0gK794yZZmOxeWlrU_f5fJxQa412x7N2BEFvMQuKRO_BwGuVmcz1WpPm0lYgtMxlKnN-CG4jkibgSw9l044hsgveSmvpnHE_2GkEcfed9Yi783zSUAF0.z9mbu6FXgEyWt0Lzbea-J8HYhPhfmS2t2DyDuWyfMe8'}`,
-    },
-  })
+  return (await axiosNext.get(`/document/${medium}`)).data.result
 }

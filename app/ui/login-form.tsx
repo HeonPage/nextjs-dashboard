@@ -12,13 +12,13 @@ import { useFormState, useFormStatus } from 'react-dom'
 import { authenticate } from '@/app/lib/actions'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+// import { SubmitHandler, useForm } from 'react-hook-form'
 import { axiosNext } from '../lib/api'
 
 export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined)
-  const router = useRouter()
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  // const router = useRouter()
+  // const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
   interface ISignIn {
     username: string
@@ -26,36 +26,36 @@ export default function LoginForm() {
     stay: boolean
   }
 
-  const { register, handleSubmit } = useForm<ISignIn>()
-  const onSubmit: SubmitHandler<any> = async (data) => {
-    setIsSubmitting(true)
-    axiosNext
-      .post(
-        '/auth/signin',
-        {
-          username: data.username,
-          password: data.password,
-        },
-        {
-          params: {
-            stay: data.stay,
-          },
-        },
-      )
-      .then((res) => {
-        if (res?.data?.result?.errorType) {
-          alert(res?.data?.result?.msg)
-        } else {
-          // get return url from query parameters or default to '/'
-          router.push('/')
-          //setAuth(true)
-        }
-      })
-      .catch((error) => {
-        alert('로그인에 실패했습니다.')
-        setIsSubmitting(false)
-      })
-  }
+  // const { register, handleSubmit } = useForm<ISignIn>()
+  // const onSubmit: SubmitHandler<any> = async (data) => {
+  //   setIsSubmitting(true)
+  //   axiosNext
+  //     .post(
+  //       '/auth/signin',
+  //       {
+  //         username: data.username,
+  //         password: data.password,
+  //       },
+  //       {
+  //         params: {
+  //           stay: data.stay,
+  //         },
+  //       },
+  //     )
+  //     .then((res) => {
+  //       if (res?.data?.result?.errorType) {
+  //         alert(res?.data?.result?.msg)
+  //       } else {
+  //         // get return url from query parameters or default to '/'
+  //         router.push('/')
+  //         //setAuth(true)
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       alert('로그인에 실패했습니다.')
+  //       setIsSubmitting(false)
+  //     })
+  // }
 
   return (
     // <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">

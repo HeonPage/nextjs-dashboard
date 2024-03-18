@@ -3,11 +3,15 @@ import Search from '@/app/ui/search'
 import Table from '@/app/ui/invoices/table'
 import { CreateInvoice } from '@/app/ui/invoices/buttons'
 import { inter } from '@/app/ui/fonts'
-import { InvoicesTableSkeleton } from '@/app/ui/skeletons'
+import {
+  DocumentsTableSkeleton,
+  InvoicesTableSkeleton,
+} from '@/app/ui/skeletons'
 import { Suspense } from 'react'
 import { fetchInvoicesPages } from '@/app/lib/data'
 import { Metadata } from 'next'
 import DocumentTable from '@/app/ui/radio/documentTable'
+import { getRadioDocumentsCount } from '@/app/lib/api'
 
 export const metadata: Metadata = {
   title: 'Document',
@@ -19,11 +23,16 @@ export default async function Page({
   searchParams?: {
     query?: string
     page?: string
+    take?: number
   }
 }) {
-  const query = searchParams?.query || ''
+  const query = (searchParams?.query || '').toUpperCase()
   const currentPage = Number(searchParams?.page) || 1
-  const totalPages = await fetchInvoicesPages(query)
+  const take = Number(searchParams?.take) || 15
+  const page = Number(searchParams?.page) || 1
+  const totalPages: number = Math.ceil(
+    Number(await getRadioDocumentsCount(query)) / take,
+  )
   return (
     <div className="w-full">
       <div className="flex w-full items-center justify-between">
@@ -33,8 +42,13 @@ export default async function Page({
         <Search placeholder="Search invoices..." />
         <CreateInvoice />
       </div>
-      <Suspense key={query + currentPage} fallback={<InvoicesTableSkeleton />}>
-        <DocumentTable query={query} currentPage={currentPage} />
+      <Suspense key={query + currentPage} fallback={<DocumentsTableSkeleton />}>
+        <DocumentTable
+          query={query}
+          currentPage={currentPage}
+          take={take}
+          page={page}
+        />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
