@@ -7,18 +7,10 @@ import { getRadioDocuments } from '@/app/lib/api'
 import { Radio_Document } from '@/app/lib/type'
 
 export default async function DocumentTable({
-  query,
-  take,
-  page,
-  currentPage,
+  documents,
 }: {
-  query: string
-  take: number
-  page: number
-  currentPage: number
+  documents: Radio_Document[]
 }) {
-  const invoices = await fetchFilteredInvoices(query, currentPage)
-  const documents: Radio_Document[] = await getRadioDocuments(take, page, query)
   return (
     <div className="mt-6 flow-root overflow-scroll">
       <div className="inline-block min-w-full align-middle">
@@ -178,7 +170,21 @@ export default async function DocumentTable({
                   <td className="whitespace-nowrap px-5 py-2">
                     <div className="flex items-center gap-3">{document.id}</div>
                   </td>
-                  <td className="whitespace-nowrap px-5 py-2">
+                  <td
+                    className={`whitespace-nowrap px-5 py-2 
+                    ${document.medium.includes('AM') && 'bg-cyan-100'} 
+                    ${document.medium.includes('FM') && 'bg-yellow-100'}
+                     ${
+                       (document.medium == '1DTV' ||
+                         document.medium == '2DTV' ||
+                         document.medium == 'EDTV') &&
+                       'bg-blue-200'
+                     }
+                    ${document.medium.includes('UDTV') && 'bg-green-100'}
+                    ${document.medium.includes('DMB') && 'bg-red-100'}
+                    ${document.medium.includes('단파') && 'bg-gray-200'}
+                    `}
+                  >
                     <div className="flex items-center gap-3">
                       {document.medium}
                     </div>

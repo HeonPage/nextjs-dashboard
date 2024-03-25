@@ -4,6 +4,7 @@ import {
   HomeIcon,
   DocumentDuplicateIcon,
   RadioIcon,
+  ChatBubbleBottomCenterTextIcon,
 } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -30,6 +31,11 @@ const links = [
         icon: RadioIcon,
       },
     ],
+  },
+  {
+    name: 'Feed',
+    href: '/dashboard/feed',
+    icon: ChatBubbleBottomCenterTextIcon,
   },
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
 ]
@@ -70,7 +76,6 @@ export default function NavLinks() {
                   ? 'h-[32px] text-sm md:p-2 md:px-6 md:mt-1 '
                   : 'h-0 text-[0px]'
               }
-              transition-[height]
              `}
                 >
                   {child.name}

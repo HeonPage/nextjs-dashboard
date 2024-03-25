@@ -88,6 +88,55 @@ export type InvoiceForm = {
   status: 'pending' | 'paid'
 }
 
+export type Board_Post = {
+  id: number
+  created_at: string
+  updated_at: string
+  board_id: number
+  category_id: number
+  user_id: number
+  nick: string
+  title: string
+  body: string
+  status: string
+  has_highlight: boolean
+  blind: boolean
+  is_anony: boolean
+}
+
+export type Feed_Category = {
+  id: number
+  created_at: string
+  updated_at: string
+  name: string
+  title: string
+  description: string
+  imageUrn: string
+  bannerUrn: string
+  username: string
+
+  imageUrl: string
+  bannerUrl: string
+}
+
+export type Feed_Post = {
+  id: number
+  created_at: string
+  updated_at: string
+  identifier: string
+  categoryName: string
+  username: string
+  title: string
+  body: string
+  category: Feed_Category
+  votes: []
+  comments: []
+  url: string
+  userVote?: number
+  voteScore?: number
+  commentCount?: number
+}
+
 export type Radio_Document = {
   id: number
   created_at: string

@@ -6,8 +6,11 @@ import {
 } from '@heroicons/react/24/outline'
 import { inter } from '@/app/ui/fonts'
 import { fetchCardData } from '@/app/lib/data'
+import { getRadioDocumentsCount } from '@/app/lib/api'
+import { LuRadioTower } from 'react-icons/lu'
 
 const iconMap = {
+  radio: LuRadioTower,
   collected: BanknotesIcon,
   customers: UserGroupIcon,
   pending: ClockIcon,
@@ -21,17 +24,32 @@ export default async function CardWrapper() {
     totalPaidInvoices,
     totalPendingInvoices,
   } = await fetchCardData()
+  const query = ''
+  const Radio_Count: number = Math.ceil(
+    Number(await getRadioDocumentsCount(query)),
+  )
   return (
     <>
       {/* NOTE: comment in this code when you get to this point in the course */}
 
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+      <Card title="무선국" value={Radio_Count} type="radio" unit="국" />
+      <Card
+        title="Pending"
+        value={totalPendingInvoices}
+        type="pending"
+        unit=""
+      />
+      <Card
+        title="Total Invoices"
+        value={numberOfInvoices}
+        type="invoices"
+        unit=""
+      />
       <Card
         title="Total Customers"
         value={numberOfCustomers}
         type="customers"
+        unit=""
       />
     </>
   )
@@ -41,10 +59,12 @@ export function Card({
   title,
   value,
   type,
+  unit,
 }: {
   title: string
   value: number | string
-  type: 'invoices' | 'customers' | 'pending' | 'collected'
+  type: 'radio' | 'invoices' | 'customers' | 'pending' | 'collected'
+  unit: string
 }) {
   const Icon = iconMap[type]
 
@@ -59,6 +79,7 @@ export function Card({
           truncate rounded-xl bg-white px-4 py-8 text-center text-2xl`}
       >
         {value}
+        {unit}
       </p>
     </div>
   )

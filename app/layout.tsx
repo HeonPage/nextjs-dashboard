@@ -1,9 +1,8 @@
 import '@/app/ui/global.css'
 import { inter } from '@/app/ui/fonts'
 import { Metadata } from 'next'
-import { Suspense } from 'react'
-import Nav from './ui/nav'
-import Toast from './ui/toast'
+
+import { AntdRegistry } from '@ant-design/nextjs-registry'
 
 export const metadata: Metadata = {
   title: 'Acme Dashboard',
@@ -17,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <AntdRegistry>{children}</AntdRegistry>
+      </body>
     </html>
   )
 }

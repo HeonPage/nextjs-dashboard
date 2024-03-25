@@ -1,6 +1,8 @@
+'use server'
 import { auth } from '@/auth'
 import axios from 'axios'
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher'
+import { unstable_noStore as noStore } from 'next/cache'
+
 export const axiosNext = axios.create({
   // baseURL: '/api',
   baseURL: 'http://localhost:4000/api',
@@ -17,6 +19,7 @@ axiosNext.interceptors.request.use(
     if (!config.headers.Authorization) {
       const session = await auth()
       const token = session?.access_token
+
       if (token && token.length > 0) {
         config.headers.Authorization = `Bearer ${token}`
       } else {
@@ -30,12 +33,23 @@ axiosNext.interceptors.request.use(
   },
 )
 
-// 게시글 API
+// 피드 API
 export const createPost = async (title: string, body: string) => {
   return await axiosNext.post(`/post/create`, {
     title: title,
     body: body,
   })
+}
+
+export const getPosts = async (take: number, page: number) => {
+  return (
+    await axiosNext.get('/feed/posts', {
+      params: {
+        take: take,
+        page: page,
+      },
+    })
+  ).data.result
 }
 
 export const getPostsByUser = async () => {
@@ -63,6 +77,20 @@ export const updatePostStatusById = async ({
 export const deletePostById = async ({ queryKey }: { queryKey: any }) => {
   const [_, id] = queryKey
   return await axiosNext.get(`/post/${id}`)
+}
+
+export const vote = async (
+  category: string,
+  identifier: string,
+  commentIdentifier: string,
+  value: number,
+) => {
+  return await axiosNext.post('/feed/vote', {
+    category: category,
+    identifier: identifier,
+    commentIdentifier: commentIdentifier,
+    value: value,
+  })
 }
 
 // 인증 API
@@ -109,6 +137,7 @@ export const getRadioDocuments = async (
   page: number,
   query: string,
 ) => {
+  noStore()
   return (
     await axiosNext.get(`/document`, {
       params: {
@@ -121,6 +150,7 @@ export const getRadioDocuments = async (
 }
 
 export const getRadioDocumentsCount = async (query: string) => {
+  noStore()
   return (
     await axiosNext.get(`/document/count`, {
       params: {
