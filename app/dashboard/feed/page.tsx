@@ -14,7 +14,7 @@ import { Feed_Post } from '@/app/lib/type'
 import { getPosts } from '@/app/lib/api'
 import Link from 'next/link'
 import { ArrowDownIcon, ArrowUpIcon } from '@heroicons/react/24/outline'
-import FeedCard, { FeedCard_Skeleton } from '@/app/ui/feed/feed-card'
+import FeedCard, { FeedCard_Skeleton } from '@/app/ui/feed/FeedCard'
 import LoadMore from '@/app/ui/feed/LoadMore'
 
 export const metadata: Metadata = {

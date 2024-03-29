@@ -1,7 +1,8 @@
 'use server'
-import { auth } from '@/auth'
+// import { auth } from '@/auth'
 import axios from 'axios'
 import { unstable_noStore as noStore } from 'next/cache'
+import { cookies } from 'next/headers'
 
 export const axiosNext = axios.create({
   // baseURL: '/api',
@@ -17,13 +18,14 @@ export const axiosNext = axios.create({
 axiosNext.interceptors.request.use(
   async (config) => {
     if (!config.headers.Authorization) {
-      const session = await auth()
-      const token = session?.access_token
-
-      if (token && token.length > 0) {
-        config.headers.Authorization = `Bearer ${token}`
+      const cookieStore = cookies()
+      const access_token = cookieStore?.get('accessToken')
+      // const session = await auth()
+      // const token = session?.access_token
+      if (access_token) {
+        config.headers.Authorization = `Bearer ${access_token.value}`
       } else {
-        console.log('*** AXIOS : SignIn or Session ERROR ***')
+        console.log('*** AXIOS : authorized ***')
       }
     }
     return config
@@ -85,12 +87,14 @@ export const vote = async (
   commentIdentifier: string,
   value: number,
 ) => {
-  return await axiosNext.post('/feed/vote', {
-    category: category,
-    identifier: identifier,
-    commentIdentifier: commentIdentifier,
-    value: value,
-  })
+  return (
+    await axiosNext.post('/feed/vote', {
+      category: category,
+      identifier: identifier,
+      commentIdentifier: commentIdentifier,
+      value: value,
+    })
+  ).data.result
 }
 
 // 인증 API
@@ -111,10 +115,29 @@ export const signUp = async (
 }
 
 export const signIn = async (username: string, password: string) => {
-  return await axiosNext.post(`/auth/signin`, {
-    username: username,
-    password: password,
-  })
+  await axiosNext
+    .post(`/auth/signin`, {
+      username: username,
+      password: password,
+    })
+    .then((res) => {
+      const jsonData = res.data.result
+      cookies().set({
+        name: 'accessToken',
+        value: jsonData.accessToken,
+        httpOnly: true,
+        path: '/',
+      })
+      cookies().set({
+        name: 'refreshToken',
+        value: jsonData.refreshToken,
+        httpOnly: true,
+        path: '/',
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
 export const credentialByToken = async () => {
