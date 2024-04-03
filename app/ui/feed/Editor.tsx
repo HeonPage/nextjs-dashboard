@@ -1,3 +1,4 @@
+'use client'
 // components/custom-editor.js
 import React, { useRef, useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -61,7 +62,13 @@ const editorConfiguration = {
   // },
 }
 
-function CustomEditor(category: any, props: any) {
+function CustomEditor({
+  category,
+  content,
+}: {
+  category: string
+  content: string
+}) {
   const {
     register,
     handleSubmit,
@@ -73,17 +80,16 @@ function CustomEditor(category: any, props: any) {
   const [editorContent, setEditorContent] = useState<string>('')
   const submitNewPost: SubmitHandler<FormValue> = async (form_data) => {
     if (isSubmitting) return
-    if (props.data) {
+    if (content) {
       console.log('submitModifyPost called')
       setIsSubmitting(true)
 
-      console.log(form_data)
       // const matched = linkify.match(content)
       // const parsedContent = urlParsedContent({ content, matched })
     } else {
       console.log('submitNewPost called')
       setIsSubmitting(true)
-      await createPost(form_data, editorContent)
+      await createPost(form_data, category, editorContent)
     }
     setIsSubmitting(false)
   }
@@ -92,15 +98,6 @@ function CustomEditor(category: any, props: any) {
     <>
       <form onSubmit={handleSubmit(submitNewPost)}>
         <div className="flex flex-col gap-2">
-          <div>
-            <input
-              id="category"
-              type="text"
-              placeholder="카테고리를 입력해주세요."
-              className="w-full max-w-[800px] border-gray-300"
-              {...register('category')}
-            />
-          </div>
           <div>
             <input
               id="title"
@@ -114,11 +111,10 @@ function CustomEditor(category: any, props: any) {
             <CKEditor
               editor={Editor}
               config={editorConfiguration}
-              data={props.initialData}
+              data={content}
               onChange={(event, editor) => {
                 const data = editor.getData()
                 setEditorContent(data)
-                console.log({ event, editor, data })
               }}
             />
           </div>

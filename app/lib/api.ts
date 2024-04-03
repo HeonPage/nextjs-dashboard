@@ -39,14 +39,41 @@ axiosNext.interceptors.request.use(
 )
 
 // 피드 API
-export const createPost = async (form_data: FormValue, content: string) => {
+// export async function getCategoryByName(name: string) {
+//   noStore()
+//   return await (
+//     await axiosNext.get(`/feed/category/search`, {
+//       params: {
+//         name: name,
+//       },
+//     })
+//   ).data.result
+// }
+
+export const getCategoryByName = async (name: string) => {
+  noStore()
+  return (
+    await axiosNext.get(`/feed/category/search`, {
+      params: {
+        name: name,
+      },
+    })
+  ).data.result
+}
+
+export const createPost = async (
+  form_data: FormValue,
+  category: string,
+  content: string,
+) => {
+  console.log('caca', category)
   await axiosNext
-    .post(`/feed/${form_data.category}/post/create`, {
+    .post(`/feed/${category}/post/create`, {
       title: form_data.title,
       body: content,
     })
     .then(() => {
-      redirect(`/dashboard/feed/${form_data.category}`)
+      redirect(`/dashboard/feed/${category}`)
     })
 }
 
