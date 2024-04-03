@@ -1,36 +1,26 @@
 'use client'
 import { inter } from '@/app/ui/fonts'
-import {
-  AtSymbolIcon,
-  KeyIcon,
-  ExclamationCircleIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline'
+import { KeyIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { ArrowRightIcon } from '@heroicons/react/20/solid'
-import { Button } from './button'
-import { useFormState, useFormStatus } from 'react-dom'
-// import { authenticate } from '@/app/lib/actions'
-import { redirect, useRouter } from 'next/navigation'
+import { useFormStatus } from 'react-dom'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { axiosNext, signIn } from '../lib/api'
+import { credentialByToken, signIn } from '../lib/api'
+import { Button } from 'antd'
+import { User } from '../lib/type'
+import { ISignIn } from '../lib/interface'
 
 // export default function LoginForm() {
 const LoginForm = () => {
-  // const [errorMessage, dispatch] = useFormState(authenticate, undefined)
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-
-  interface ISignIn {
-    username: string
-    password: string
-    stay: boolean
-  }
 
   const { register, handleSubmit } = useForm<ISignIn>()
   const onSubmit: SubmitHandler<any> = async (data) => {
     setIsSubmitting(true)
     await signIn(data.username, data.password)
+    setTimeout(() => {}, 6000)
     setIsSubmitting(false)
     router.push('/dashboard')
   }
@@ -63,7 +53,7 @@ const LoginForm = () => {
                 <UserCircleIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
               </div>
             </div>
-            <div className="mt-4">
+            <div className="my-4">
               <label
                 className="mb-3 mt-5 block text-xs font-medium text-gray-900"
                 htmlFor="password"
@@ -85,7 +75,12 @@ const LoginForm = () => {
               </div>
             </div>
           </div>
-          <LoginButton />
+          <Button type="primary" loading={isSubmitting} htmlType="submit" block>
+            <div className="w-full flex">
+              Log In
+              <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
+            </div>
+          </Button>
           <div className="flex h-8 items-end space-x-1">
             {/* Add form errors here */}
             <div
@@ -97,15 +92,6 @@ const LoginForm = () => {
         </div>
       </form>
     </>
-  )
-}
-
-const LoginButton = () => {
-  const { pending } = useFormStatus()
-  return (
-    <Button className="mt-4 w-full" aria-disabled={pending}>
-      Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-    </Button>
   )
 }
 

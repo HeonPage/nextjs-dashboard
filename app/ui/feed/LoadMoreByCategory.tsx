@@ -1,12 +1,12 @@
 'use client'
-import { getPosts } from '@/app/lib/api'
+import { getPosts, getPostsByCategory } from '@/app/lib/api'
 import Image from 'next/image'
 import { Suspense, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import FeedCard, { FeedCard_Skeleton } from './FeedCard'
 import { Feed_Post } from '@/app/lib/type'
 let page = 2
-function LoadMore() {
+const LoadMoreByCategory = ({ category }: { category: string }) => {
   const { ref, inView } = useInView()
   const [data, setData] = useState<Feed_Post[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -16,7 +16,7 @@ function LoadMore() {
       setIsLoading(true)
       const delay = 200
       const timeoutId = setTimeout(() => {
-        getPosts(8, page).then((res) => {
+        getPostsByCategory(category, 8, page).then((res) => {
           if (res.length === 0) setHasMoreData(false)
           else {
             setData([...data, ...res])
@@ -56,4 +56,4 @@ function LoadMore() {
   )
 }
 
-export default LoadMore
+export default LoadMoreByCategory

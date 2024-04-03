@@ -12,17 +12,18 @@ export const metadata: Metadata = {
   description: 'The official Next.js Learn Dashboard built with App Router.',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 }
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Suspense>
         <Nav />
       </Suspense>
-      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+      <div className="flex h-screen flex-col md:mt-16 md:flex-row md:overflow-hidden">
         <div className="w-full flex-none md:w-64">
           <SideNav />
         </div>
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+        <div className="flex-grow p-1 mt-10 md:mt-0 md:overflow-y-auto md:p-12">
           {children}
         </div>
       </div>

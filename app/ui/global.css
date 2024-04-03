@@ -16,3 +16,9 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+.ck.ck-editor {
+  max-width: 800px;
+}
+.ck-editor__editable {
+  min-height: 400px;
+}

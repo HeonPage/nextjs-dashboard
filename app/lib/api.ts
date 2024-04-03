@@ -1,8 +1,11 @@
 'use server'
 // import { auth } from '@/auth'
 import axios from 'axios'
-import { unstable_noStore as noStore } from 'next/cache'
+import { unstable_noStore as noStore, revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
+import { User } from './type'
+import { redirect } from 'next/navigation'
+import { FormValue } from './interface'
 
 export const axiosNext = axios.create({
   // baseURL: '/api',
@@ -18,14 +21,14 @@ export const axiosNext = axios.create({
 axiosNext.interceptors.request.use(
   async (config) => {
     if (!config.headers.Authorization) {
-      const cookieStore = cookies()
-      const access_token = cookieStore?.get('accessToken')
       // const session = await auth()
       // const token = session?.access_token
+      const cookieStore = cookies()
+      const access_token = cookieStore?.get('accessToken')
       if (access_token) {
         config.headers.Authorization = `Bearer ${access_token.value}`
       } else {
-        console.log('*** AXIOS : authorized ***')
+        console.log('no access_token')
       }
     }
     return config
@@ -36,11 +39,15 @@ axiosNext.interceptors.request.use(
 )
 
 // 피드 API
-export const createPost = async (title: string, body: string) => {
-  return await axiosNext.post(`/post/create`, {
-    title: title,
-    body: body,
-  })
+export const createPost = async (form_data: FormValue, content: string) => {
+  await axiosNext
+    .post(`/feed/${form_data.category}/post/create`, {
+      title: form_data.title,
+      body: content,
+    })
+    .then(() => {
+      redirect(`/dashboard/feed/${form_data.category}`)
+    })
 }
 
 export const getPosts = async (take: number, page: number) => {
@@ -52,6 +59,25 @@ export const getPosts = async (take: number, page: number) => {
       },
     })
   ).data.result
+}
+
+export const getPostsByCategory = async (
+  category: string,
+  take: number,
+  page: number,
+) => {
+  return (
+    await axiosNext.get(`/feed/${category}/posts`, {
+      params: {
+        take: take,
+        page: page,
+      },
+    })
+  ).data.result
+}
+
+export const getPost = async (category: string, identifier: string) => {
+  return (await axiosNext.get(`/feed/${category}/${identifier}`)).data.result
 }
 
 export const getPostsByUser = async () => {
@@ -115,7 +141,8 @@ export const signUp = async (
 }
 
 export const signIn = async (username: string, password: string) => {
-  await axiosNext
+  console.log('try signin')
+  return await axiosNext
     .post(`/auth/signin`, {
       username: username,
       password: password,
@@ -134,14 +161,29 @@ export const signIn = async (username: string, password: string) => {
         httpOnly: true,
         path: '/',
       })
+      return jsonData
     })
     .catch((error) => {
-      console.log(error)
+      redirect('/')
     })
 }
 
-export const credentialByToken = async () => {
-  return await axiosNext.post(`/auth`)
+export const signOut = async () => {
+  cookies().delete('accessToken')
+  cookies().delete('refreshToken')
+  revalidatePath('/')
+  redirect('/')
+}
+
+export const credentialByToken = async (): Promise<User> => {
+  return await axiosNext
+    .get(`/auth`)
+    .then((res) => {
+      return res.data.result
+    })
+    .catch((error) => {
+      signOut()
+    })
 }
 
 export const getUsers = async () => {

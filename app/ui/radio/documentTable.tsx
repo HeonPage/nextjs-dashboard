@@ -59,7 +59,7 @@ export default async function DocumentTable({
               <tr>
                 <th
                   scope="col"
-                  className="px-5 py-2 font-medium text-center sm:pl-6"
+                  className="px-5 py-2 font-medium text-center md:pl-6"
                 >
                   No
                 </th>

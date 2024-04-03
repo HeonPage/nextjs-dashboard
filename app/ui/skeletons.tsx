@@ -34,7 +34,7 @@ export function RevenueChartSkeleton() {
     <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>
       <div className="mb-4 h-8 w-36 rounded-md bg-gray-100" />
       <div className="rounded-xl bg-gray-100 p-4">
-        <div className="mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 sm:grid-cols-13 md:gap-4" />
+        <div className="mt-0 grid h-[410px] grid-cols-12 items-end gap-2 rounded-md bg-white p-4 md:grid-cols-13 md:gap-4" />
         <div className="flex items-center pb-2 pt-6">
           <div className="h-5 w-5 rounded-full bg-gray-200" />
           <div className="ml-2 h-4 w-20 rounded-md bg-gray-200" />
@@ -88,13 +88,13 @@ export default function DashboardSkeleton() {
       <div
         className={`${shimmer} relative mb-4 h-8 w-36 overflow-hidden rounded-md bg-gray-100`}
       />
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 md:grid-cols-4">
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
         <CardSkeleton />
       </div>
-      <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
+      <div className="mt-6 grid grid-cols-1 gap-1 md:grid-cols-4 md:grid-cols-8">
         <RevenueChartSkeleton />
         <LatestInvoicesSkeleton />
       </div>
@@ -271,7 +271,7 @@ export function InvoicesTableSkeleton() {
           <table className="hidden min-w-full text-gray-900 md:table">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
-                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                <th scope="col" className="px-4 py-5 font-medium md:pl-6">
                   Customer
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
@@ -288,7 +288,7 @@ export function InvoicesTableSkeleton() {
                 </th>
                 <th
                   scope="col"
-                  className="relative pb-4 pl-3 pr-6 pt-2 sm:pr-6"
+                  className="relative pb-4 pl-3 pr-6 pt-2 md:pr-6"
                 >
                   <span className="sr-only">Edit</span>
                 </th>
@@ -327,7 +327,7 @@ export function DocumentsTableSkeleton() {
               <tr>
                 <th
                   scope="col"
-                  className="px-5 py-2 font-medium text-center sm:pl-6"
+                  className="px-5 py-2 font-medium text-center md:pl-6"
                 >
                   No
                 </th>
